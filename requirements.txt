@@ -1,0 +1,94 @@
+# ==============================================================================
+# AI Mock Interview Coach Platform — Complete Web & Mobile System Requirements
+# ==============================================================================
+
+[PROJECT SPECIFICATION]
+Project Title: AI Mock Interview & Practice Platform (Web + Mobile App)
+Web Framework: Vue 3 + TypeScript + Vite + Tailwind CSS System
+Backend Stack: Python FastAPI + SQLite + Uvicorn + OpenRouter/OpenAI API Integrations
+Mobile Framework: Flutter 3.x (Dart 3.x) Cross-Platform Mobile Application
+Target Environment: Web (Desktop/Laptop Browsers) & Mobile Devices (Android APK / iOS)
+
+# ------------------------------------------------------------------------------
+# 1. WEB APPLICATION ARCHITECTURE & DEPENDENCIES
+# ------------------------------------------------------------------------------
+Web Frontend Root: frontend/
+- Framework: Vue 3 (Composition API <script setup lang="ts">)
+- Build Tool: Vite 8.x + Vue-TSC
+- Router: Vue Router 4.x
+- State Management: Pinia Store (authStore, interviewBit, interviewStore, settingsStore)
+- Key Web Views:
+  * MockInterviewView.vue — Pre-interview setup, Live Camera Room, AI Interviewer Avatar, Instant Start
+  * SettingsView.vue — Individual OpenRouter/OpenAI API Key setup & persistence in localStorage
+  * InterviewResult.vue — Detailed AI evaluation report & performance dashboard
+  * DashboardView.vue — Session history overview & key metrics
+
+Backend API Root: backend/
+- Framework: Python FastAPI
+- App Entry: backend/main.py (Runs on http://localhost:8005)
+- Core Routers & Services:
+  * app/routers/interviews.py — Session creation, streaming SSE questions, report generation
+  * app/routers/resumes.py — Fast PDF/Word resume parsing
+  * app/services/feedback_service.py — Dynamic performance scoring based on candidate Q&A
+  * app/config.py — Default OpenRouter URL (https://openrouter.ai/api/v1) & model configs
+
+# ------------------------------------------------------------------------------
+# 2. MOBILE APPLICATION ARCHITECTURE & DEPENDENCIES
+# ------------------------------------------------------------------------------
+Mobile App Root: mobile_app/
+- Framework: Flutter 3.x (Dart 3.x)
+- Dependencies (pubspec.yaml):
+  * http: ^1.1.0                     # REST & OpenRouter HTTP API requests
+  * provider: ^6.0.5                 # Application State Management
+  * shared_preferences: ^2.2.2       # Local Secure Storage for API Keys & Preferences
+  * connectivity_plus: ^5.0.2        # Network Connection & Offline Status Monitoring
+  * camera: ^0.10.5+9                # Live Candidate Webcam Feed & Preview
+  * flutter_tts: ^3.8.5              # Text-To-Speech AI Interviewer Spoken Questions
+  * speech_to_text: ^6.6.0           # Candidate Voice Input & Speech Recognition
+  * google_fonts: ^6.1.0             # Inter & JetBrains Mono Typography
+  * intl: ^0.19.0                    # Date, Time & Number Formatting
+
+# ------------------------------------------------------------------------------
+# 3. COMPLETE FEATURE & FUNCTIONALITY REQUIREMENTS
+# ------------------------------------------------------------------------------
+
+[Requirement 1: Individual API Key Configuration (Web + Mobile)]
+- Web: Configured on http://localhost:5173/settings under "Custom OpenRouter API Key". Stored in localStorage.
+- Mobile: Configured in mobile_app/lib/views/settings_view.dart. Stored in shared_preferences.
+- Pre-Flight Validation: Prompts user to configure key if no custom key is detected before starting an interview.
+
+[Requirement 2: Active Session Lock & Single Live Room Guard]
+- Details: Prevents duplicate interview creation if a live session is active.
+- Warning: Displays alert `⚠️ You already have an active live interview session. Please complete or end that session first.`
+- Controls: "End Session" action button completes interview, releases lock, and generates evaluation report.
+
+[Requirement 3: 100% Genuine Actual Performance Evaluation]
+- Details: Evaluation reports calculate scores strictly from recorded candidate speech & Q&A.
+- Low Score Guard: 0 candidate answers return an accurate low score/needs improvement rating rather than false defaults.
+
+[Requirement 4: Fast Resume Analysis & Instant Interview Launch]
+- Details: Parses PDF/Word files instantly, populating candidate context & launching interview room without delay.
+
+[Requirement 5: Offline Network Monitoring]
+- Web & Mobile: Detects offline network connection and displays alert banner `⚠️ Offline Mode: No Internet Connection.`
+
+# ------------------------------------------------------------------------------
+# 4. DEPLOYMENT & BUILD COMMANDS
+# ------------------------------------------------------------------------------
+
+A. Web Application Build & Run:
+   1. Backend:
+      cd backend
+      ./venv/bin/python main.py
+   2. Frontend Build:
+      cd frontend
+      npm run build
+
+B. Mobile Application Build & Run:
+   1. Install Dependencies:
+      cd mobile_app
+      flutter pub get
+   2. Build Android APK:
+      flutter build apk --release
+   3. Output APK:
+      mobile_app/build/app/outputs/flutter-apk/app-release.apk

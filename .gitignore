@@ -1,0 +1,46 @@
+# Environment variables (secrets - never push)
+.env
+.env.local
+.env.*.local
+
+# Allow .env.production (no secrets, only public URLs)
+!frontend/.env.production
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node / Vue
+node_modules/
+dist/
+.vite/
+
+# Flutter / Dart
+.dart_tool/
+.pub-cache/
+build/
+
+# Databases
+*.db
+*.sqlite3
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Gemini
+.gemini/
+interview-bit-extension/

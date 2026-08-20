@@ -1,0 +1,67 @@
+# ==============================================================================
+# AI Mock Interview Coach Mobile Application — Requirements & Specifications
+# ==============================================================================
+
+[PROJECT SUMMARY]
+Application Name: AI Mock Interview Coach Mobile
+Target Framework: Flutter 3.x (Dart 3.x)
+Platforms: Android (APK) & iOS
+UI Design System: Modern Dark Mode (#020617), Glassmorphism, Tailwind UI Aesthetic
+
+# ------------------------------------------------------------------------------
+# 1. CORE DEPENDENCIES & LIBRARIES (pubspec.yaml)
+# ------------------------------------------------------------------------------
+flutter: sdk: flutter
+http: ^1.1.0                     # REST & OpenRouter HTTP API requests
+provider: ^6.0.5                 # Application State Management
+shared_preferences: ^2.2.2       # Local Secure Storage for API Keys & Preferences
+connectivity_plus: ^5.0.2        # Network Connection & Offline Status Monitoring
+camera: ^0.10.5+9                # Live Candidate Webcam Feed & Preview
+flutter_tts: ^3.8.5              # Text-To-Speech AI Interviewer Spoken Questions
+speech_to_text: ^6.6.0           # Candidate Voice Input & Speech Recognition
+google_fonts: ^6.1.0             # Inter & JetBrains Mono Typography
+intl: ^0.19.0                    # Date, Time & Number Formatting
+
+# ------------------------------------------------------------------------------
+# 2. KEY FEATURES & REQUIREMENTS SPECIFICATION
+# ------------------------------------------------------------------------------
+
+Feature 1: Individual OpenRouter / OpenAI Key Configuration
+- Screen: lib/views/settings_view.dart
+- Details: Users paste their personal OpenRouter Key (sk-or-v1-...) or OpenAI Key.
+- Storage: Saved locally in encrypted device preferences (shared_preferences).
+- Header: Attached automatically to AI completion requests via `Authorization: Bearer <key>`.
+
+Feature 2: Active Live Session Guard & Single Session Lock
+- Screen: lib/views/mock_interview_view.dart
+- Details: Prevents duplicate interview creation if a live session is active.
+- Warning: Displays alert `⚠️ You already have an active live interview session. Please complete or end that session first.`
+- Controls: Includes prominent "End Session" action button in AppBar to complete interview and generate report.
+
+Feature 3: Network Connection & Offline Detector
+- Widget: lib/widgets/custom_widgets.dart (NetworkOfflineBanner)
+- Details: Detects offline network status using `connectivity_plus`.
+- Alert: Displays banner `⚠️ Offline Mode: No Internet Connection. Reconnecting...`
+
+Feature 4: 100% Genuine Actual Performance Evaluation
+- Details: Evaluation reports calculate scores strictly from recorded candidate speech & Q&A.
+- Low Score Guard: 0 candidate answers return an accurate low score/needs improvement rating rather than false defaults.
+
+Feature 5: Live Video Preview & AI Audio Visualizer
+- Details: Displays live camera stream box (REC LIVE indicator) alongside AI interviewer avatar (Sophia AI).
+
+# ------------------------------------------------------------------------------
+# 3. BUILD & INSTALLATION COMMANDS
+# ------------------------------------------------------------------------------
+1. Install Dependencies:
+   cd mobile_app
+   flutter pub get
+
+2. Run in Development Mode:
+   flutter run -d chrome
+
+3. Build Release Android APK:
+   flutter build apk --release
+
+# Output Location:
+# mobile_app/build/app/outputs/flutter-apk/app-release.apk
