@@ -53,6 +53,7 @@ const routes = [
   { path: '/register', name: 'Register', component: RegisterView, meta: { guestOnly: true } },
   { path: '/forgot-password', name: 'ForgotPassword', component: ForgotPasswordView, meta: { guestOnly: true } },
   { path: '/reset-password', name: 'ResetPassword', component: ResetPasswordView, meta: { guestOnly: true } },
+  { path: '/:pathMatch(.*)*', redirect: '/login' },
 ]
 
 const router = createRouter({
